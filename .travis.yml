@@ -1,0 +1,11 @@
+language: python
+sudo: false
+cache: pip
+python:
+- '3.5'
+fail_fast: true
+before_install:
+    - pip install pycodestyle
+script:
+    - pycodestyle HPE_D6020.py
+    - pycodestyle HPE_D6020_cli.py
