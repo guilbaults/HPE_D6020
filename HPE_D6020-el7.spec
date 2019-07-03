@@ -1,6 +1,6 @@
 Name:	  HPE_D6020
-Version:  0.0.1
-%global gittag 0.0.1
+Version:  0.0.2
+%global gittag 0.0.2
 Release:  1%{?dist}
 Summary:  Script to identify slots in a HPE D6020 JBOD
 
@@ -38,6 +38,8 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /opt/HPE_D6020/*.pyo
 
 %changelog
+* Wed Jul 3 2019 Simon Guilbault <simon.guilbault@calculquebec.ca> 0.0.2-1
+- Support for missing disks
 * Tue Jul 2 2019 Simon Guilbault <simon.guilbault@calculquebec.ca> 0.0.1-1
 - Initial release
 

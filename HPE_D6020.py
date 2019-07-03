@@ -12,10 +12,14 @@ class Enclosure:
         bays = {}
         for file_name in os.listdir('/sys/class/enclosure/' + enc_sas):
             if 'DriveBay' in file_name:
-                block = os.listdir('/sys/class/enclosure/' + enc_sas + '/' +
-                                   file_name + '/device/block/')[0]
                 bay = int(re.match(r'.*DriveBay(\d+).*', file_name).group(1))
-                bays[bay] = [block]
+                try:
+                    block = os.listdir('/sys/class/enclosure/' + enc_sas +
+                                       '/' + file_name + '/device/block/')[0]
+                    bays[bay] = [block]
+                except FileNotFoundError:
+                    # for empty slots
+                    bays[bay] = []
         return bays
 
     def get_enclosures(self):
@@ -38,8 +42,9 @@ class Enclosure:
                         mapping = self.bay_mapping(enc_sas)
                         # merge the list of each key to have multiple blocks
                         for bay in mapping.keys():
-                            enclosures[enc_id]['bays'][bay].append(
-                                mapping[bay][0])
+                            if len(mapping[bay]) > 0:
+                                enclosures[enc_id]['bays'][bay].append(
+                                    mapping[bay][0])
         return enclosures
 
     def jbod_bay(self, block):
